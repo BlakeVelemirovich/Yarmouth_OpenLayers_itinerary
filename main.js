@@ -1,3 +1,10 @@
+/*
+  Blake Velemirovich
+  March 21, 2025
+  main.js
+  OpenLayers web mapping applications for an intintary of interesting things in the town of Yarmouth.
+*/
+
 import './style.css';
 import {Map, View} from 'ol';
 import TileLayer from 'ol/layer/Tile';
