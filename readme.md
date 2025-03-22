@@ -1,3 +1,5 @@
+This is a project using OpenLayers to create a Web Mapping Applicaton for an itinerary plan for Yarmouth. It contains GeoJson data that represents interesting locations in the town of Yarmouth and displays them programmatically on an OpenLayers map with options to dynamically display different maps.
+
 # OpenLayers + Vite
 
 This example demonstrates how the `ol` package can be used with [Vite](https://vitejs.dev/).
