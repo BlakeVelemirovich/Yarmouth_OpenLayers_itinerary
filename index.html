@@ -1,19 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/x-icon" href="https://openlayers.org/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Using OpenLayers with Vite</title>
-    <!--
-        Blake Velemirovich
-        March 21, 2025
-        index.html
-        OpenLayers web mapping applications for an intintary of interesting things in the town of Yarmouth.
-    -->
-  </head>
-  <body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yarmouth, NS - Interactive Map</title>
+    <script src="https://cdn.jsdelivr.net/npm/ol@latest/dist/ol.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@latest/ol.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="main.js" defer></script>
+</head>
+<body>
+    <h1>Yarmouth, NS - Interactive Map</h1>
+    <img src="logo.png" alt="Logo" width="100">
+    <div class="controls">
+        <label><input type="radio" name="basemap" id="osm" checked> OSM Basemap</label>
+        <label><input type="radio" name="basemap" id="sat"> Satellite Basemap</label>
+        <br>
+        <label><input type="checkbox" id="layer1"> Show Points of Interest</label>
+        <label><input type="checkbox" id="layer2"> Show Roads</label>
+    </div>
     <div id="map"></div>
-    <script type="module" src="./main.js"></script>
-  </body>
+    <div class="coordinates">Cursor Position: <span id="coords">0, 0</span></div>
+    <footer>&copy; 2025 Blake Velemirovich</footer>
+</body>
 </html>
