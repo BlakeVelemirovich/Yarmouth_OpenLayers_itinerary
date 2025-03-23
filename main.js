@@ -92,5 +92,5 @@ document.querySelector('#layer2').addEventListener('change', function () {
 // Show cursor coordinates
 map.on('pointermove', function (evt) {
     const coord = toLonLat(evt.coordinate);
-    document.getElementById('coords').textContent = `${coord[0].toFixed(4)}, ${coord[1].toFixed(4)}`;
+    document.getElementById('coords').textContent = `${coord[0].toFixed(5)}, ${coord[1].toFixed(5)}`;
 });
