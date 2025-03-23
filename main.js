@@ -47,7 +47,7 @@ document.querySelector('#sat').addEventListener('change', () => {
     map.getLayers().setAt(0, satLayer);
 });
 
-// Define vector layers
+// Define points layers
 const pointsLayer = new VectorLayer({
     source: new VectorSource({
         url: './GeoJsons/PointsOfInterest.geojson',
@@ -62,7 +62,8 @@ const pointsLayer = new VectorLayer({
     })
 });
 
-const linesLayer = new VectorLayer({
+// Trail layers
+const trailLayer = new VectorLayer({
     source: new VectorSource({
         url: './GeoJsons/Trails.geojson',
         format: new GeoJSON(),
@@ -73,7 +74,7 @@ const linesLayer = new VectorLayer({
 });
 
 // Polygon Layers
-const Layer = new VectorLayer({
+const polygonLayer = new VectorLayer({
     source: new VectorSource({
         url: './GeoJsons/Polygons.geojson',
         format: new GeoJSON(),
@@ -83,20 +84,24 @@ const Layer = new VectorLayer({
     })
 });
 
-// Toggle layers with checkboxes
-document.querySelector('#layer1').addEventListener('change', function () {
+// Points of interest check box
+const pointsCheckBox = document.getElementById('pointsCheck');
+pointsCheckBox.addEventListener('change', function () {
     if (this.checked) {
-        map.addLayer(poiLayer);
+        map.addLayer(pointsLayer);
     } else {
-        map.removeLayer(poiLayer);
+        map.removeLayer(pointsLayer);
     }
+    console.log("beep boop")
 });
 
-document.querySelector('#layer2').addEventListener('change', function () {
+// Trail check box
+const trailCheckBox = document.getElementById('trailCheck');
+trailCheckBox.addEventListener('change', function () {
     if (this.checked) {
-        map.addLayer(roadLayer);
+        map.addLayer(trailLayer);
     } else {
-        map.removeLayer(roadLayer);
+        map.removeLayer(trailLayer);
     }
 });
 
@@ -105,3 +110,6 @@ map.on('pointermove', function (evt) {
     const coord = toLonLat(evt.coordinate);
     document.getElementById('coords').textContent = `${coord[0].toFixed(5)}, ${coord[1].toFixed(5)}`;
 });
+
+map.addLayer(pointsLayer);
+map.addLayer(trailLayer);
