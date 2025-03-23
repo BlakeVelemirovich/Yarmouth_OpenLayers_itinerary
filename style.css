@@ -1,3 +1,11 @@
+/*
+Blake Velemirovich
+March 21, 2025
+style.css
+OpenLayers web mapping applications for an intintary of interesting things in the town of Yarmouth.
+This defines the styles for the web map.
+*/
+
 @import "node_modules/ol/ol.css";
 
 body {
@@ -51,4 +59,17 @@ footer {
     background: rgba(0, 0, 0, 0.8);
     border-top: 1px solid #0ff;
     text-shadow: 0 0 10px #0ff;
+}
+
+
+header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+img {
+    width: 3.5rem;
+    height: 3.5rem;
+    margin-left: 1rem;
 }
