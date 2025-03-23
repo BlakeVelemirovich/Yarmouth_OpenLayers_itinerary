@@ -48,9 +48,9 @@ document.querySelector('#sat').addEventListener('change', () => {
 });
 
 // Define vector layers
-const poiLayer = new VectorLayer({
+const pointsLayer = new VectorLayer({
     source: new VectorSource({
-        url: 'points_of_interest.geojson',
+        url: './GeoJsons/PointsOfInterest.geojson',
         format: new GeoJSON(),
     }),
     style: new Style({
@@ -62,9 +62,20 @@ const poiLayer = new VectorLayer({
     })
 });
 
-const roadLayer = new VectorLayer({
+const linesLayer = new VectorLayer({
     source: new VectorSource({
-        url: 'roads.geojson',
+        url: './GeoJsons/Trails.geojson',
+        format: new GeoJSON(),
+    }),
+    style: new Style({
+        stroke: new Stroke({ color: 'blue', width: 2 })
+    })
+});
+
+// Polygon Layers
+const Layer = new VectorLayer({
+    source: new VectorSource({
+        url: './GeoJsons/Polygons.geojson',
         format: new GeoJSON(),
     }),
     style: new Style({

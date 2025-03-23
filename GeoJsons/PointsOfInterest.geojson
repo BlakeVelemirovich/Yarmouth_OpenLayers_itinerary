@@ -1,0 +1,36 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+      {
+        "type": "Feature",
+        "properties": {
+          "name": "Cape Forchu Lighthouse"
+        },
+        "geometry": {
+          "coordinates": [-66.15535408888945, 43.79413838175617],
+          "type": "Point"
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "name": "Mysterious Overton Stone"
+        },
+        "geometry": {
+          "coordinates": [-66.1496219630109, 43.83186160233157],
+          "type": "Point"
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "name": "Bunker Island Lighthouse"
+        },
+        "geometry": {
+          "coordinates": [-66.14343372860124, 43.812368111821854],
+          "type": "Point"
+        },
+        "id": 6
+      }
+    ]
+  }
