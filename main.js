@@ -8,6 +8,7 @@ import VectorSource from 'ol/source/Vector';
 import GeoJSON from 'ol/format/GeoJSON';
 import { Circle, Fill, Stroke, Style } from 'ol/style';
 import { fromLonLat, toLonLat } from 'ol/proj';
+import { Icon } from 'ol/style';
 
 /*
   Blake Velemirovich
@@ -16,7 +17,7 @@ import { fromLonLat, toLonLat } from 'ol/proj';
   OpenLayers web mapping applications for an intintary of interesting things in the town of Yarmouth.
 */
 
-// Define the two base layers
+// Define the three base layers
 const osmLayer = new TileLayer({
     source: new OSM()
 });
@@ -27,6 +28,12 @@ const satLayer = new TileLayer({
     })
 });
 
+const darkLayer = new TileLayer({
+    source: new XYZ({
+        url: 'https://{a-c}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png'
+    })
+});
+
 // Create the map instance with only the OSM layer by default
 const map = new Map({
     target: 'map',
@@ -34,12 +41,12 @@ const map = new Map({
       osmLayer
     ],
     view: new View({
-        center: fromLonLat([-66.1174, 43.8375]),
-        zoom: 12
+        center: fromLonLat([-66.12959, 43.81600]),
+        zoom: 13
     })
 });
 
-// Function to switch basemaps
+// Function to switch basemaps using event listeners waiting for a change in radio button
 document.querySelector('#osm').addEventListener('change', () => {
     map.getLayers().setAt(0, osmLayer);
 });
@@ -47,22 +54,44 @@ document.querySelector('#sat').addEventListener('change', () => {
     map.getLayers().setAt(0, satLayer);
 });
 
-// Define points layers
+document.querySelector('#darkMode').addEventListener('change', () => {
+    map.getLayers().setAt(0, darkLayer);
+}
+);
+
 const pointsLayer = new VectorLayer({
     source: new VectorSource({
         url: './GeoJsons/PointsOfInterest.geojson',
         format: new GeoJSON(),
     }),
-    style: new Style({
-        image: new Circle({
-            radius: 5,
-            fill: new Fill({ color: 'red' }),
-            stroke: new Stroke({ 
-                color: 'black', 
-                width: 1 
-            }) 
+    style: [
+        // Glow effect (larger circle with low opacity)
+        new Style({
+            image: new Circle({
+                radius: 10, // Larger radius for the glow
+                fill: new Fill({
+                    color: '#00b3b3' // Neon cyan with 20% opacity
+                }),
+                stroke: new Stroke({
+                    color: 'rgba(0, 255, 255, 0.3)', // Neon cyan border with 30% opacity
+                    width: 2
+                })
+            })
+        }),
+        // Main point style
+        new Style({
+            image: new Circle({
+                radius: 6, // Smaller radius for the main point
+                fill: new Fill({
+                    color: 'rgba(0, 255, 255, 0.8)' // Neon cyan fill with 80% opacity
+                }),
+                stroke: new Stroke({
+                    color: '#0ff', // Neon cyan border
+                    width: 2
+                })
+            })
         })
-    })
+    ]
 });
 
 // Trail layers
@@ -90,11 +119,11 @@ const polygonLayer = new VectorLayer({
             color: 'rgba(0, 255, 255, 0.4)' 
         }),
         stroke: new Stroke({
-            color: '#0ff',
-            width: 3, 
-            lineDash: [5, 5], 
-            lineCap: 'round', 
-            lineJoin: 'round' 
+            color: '#00b3b3', 
+            width: 4,
+            lineDash: [2, 2],
+            lineCap: 'round',
+            lineJoin: 'round'
         })
     })
 });
