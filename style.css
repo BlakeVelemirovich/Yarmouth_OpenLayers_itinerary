@@ -5,7 +5,9 @@ body {
 }
 
 #map { 
-  width: 80%; height: 500px; margin: auto; 
+  width: 80%; 
+  height: 65vh; 
+  margin: auto; 
 }
 
 .controls { 
