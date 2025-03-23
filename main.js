@@ -32,13 +32,14 @@ const darkLayer = new TileLayer({
         url: 'https://{a-c}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png'
     })
 });
+
 // Get selected radio button (this is a fix for refreshing the page and having the correct layer selected)
 const selectedBaseLayer = document.querySelector('input[name="basemap"]:checked');
 
 // Default layer is the light mode OSM layer
 let initialLayer = osmLayer; 
 
-// Check whcih radio button is selected and set the initial layer to the correct layer
+// Check which radio button is selected and set the initial layer to the correct layer
 if (selectedBaseLayer) {
     if (selectedBaseLayer.id === 'sat') {
         initialLayer = satLayer;
@@ -57,7 +58,6 @@ const map = new Map({
     })
 });
 
-
 // Function to switch basemaps using event listeners waiting for a change in radio button
 // Works by just replacing the first layer in the map layers array with the map layer associated with the radio button clicked
 document.querySelector('#osm').addEventListener('change', () => {
@@ -69,8 +69,7 @@ document.querySelector('#sat').addEventListener('change', () => {
 
 document.querySelector('#darkMode').addEventListener('change', () => {
     map.getLayers().setAt(0, darkLayer);
-}
-);
+});
 
 // Points of interest layer
 const pointsLayer = new VectorLayer({
@@ -121,7 +120,7 @@ const trailLayer = new VectorLayer({
         format: new GeoJSON(),
     }),
     style: [
-        // This line is for the glow effect and is a larger line with low opacity. Under neath it is the a smaller line, with bolder color.
+        // This line is for the glow effect and is a larger line with low opacity. Underneath it is a smaller line, with bolder color.
         new Style({
             stroke: new Stroke({
                 // 0.3 opacity to make it glow
@@ -171,48 +170,47 @@ const polygonLayer = new VectorLayer({
 });
 
 // Points of interest check box, whenever this is clicked, we will add or remove the layer from the map array.
-const pointsCheckBox = document.getElementById('pointsCheck');
-pointsCheckBox.addEventListener('change', function () {
-    if (this.checked) {
-        map.addLayer(pointsLayer);
-    } else {
-        map.removeLayer(pointsLayer);
-    }
-});
+setupLayerToggle('pointsCheck', pointsLayer);
 
 // Trail check box
-const trailCheckBox = document.getElementById('trailCheck');
-trailCheckBox.addEventListener('change', function () {
-    if (this.checked) {
-        map.addLayer(trailLayer);
-    } else {
-        map.removeLayer(trailLayer);
-    }
-});
+setupLayerToggle('trailCheck', trailLayer);
 
 // Polygon check box
-const polygonCheckBox = document.getElementById('polygonCheck');
-polygonCheckBox.addEventListener('change', function () {
-    if (this.checked) {
-        map.addLayer(polygonLayer);
-    } else {
-        map.removeLayer(polygonLayer);
-    }
-});
+setupLayerToggle('polygonCheck', polygonLayer);
 
 // Get cursor coordinates and then adjust the text content of the coords div to show the coordinates of the cursor
-map.on('pointermove', function (evt) {
-    const coord = toLonLat(evt.coordinate);
-    document.getElementById('coords').textContent = `${coord[0].toFixed(5)}, ${coord[1].toFixed(5)}`;
-});
+setupCursorCoordinates();
 
 // Add each layer to the map so that it starts with them enabled. Check first if the checkbox is checked, if it is, add the layer to the map.
-if (pointsCheckBox.checked) {
-    map.addLayer(pointsLayer);
+addInitialLayers(pointsLayer, 'pointsCheck');
+addInitialLayers(trailLayer, 'trailCheck');
+addInitialLayers(polygonLayer, 'polygonCheck');
+
+// Functions sorted alphabetically
+function addInitialLayers(layer, checkboxId) {
+    const checkBox = document.getElementById(checkboxId);
+    // If the checkbox is checked, add the layer to the map
+    if (checkBox.checked) {
+        map.addLayer(layer);
+    }
 }
-if (trailCheckBox.checked) {
-    map.addLayer(trailLayer);
+
+function setupCursorCoordinates() {
+    // Get the coordinates of the cursor and display them in the coords div
+    map.on('pointermove', function (evt) {
+        const coord = toLonLat(evt.coordinate);
+        document.getElementById('coords').textContent = `${coord[0].toFixed(5)}, ${coord[1].toFixed(5)}`;
+    });
 }
-if (polygonCheckBox.checked) {
-    map.addLayer(polygonLayer);
+
+function setupLayerToggle(checkboxId, layer) {
+    // Add an event listener to the checkbox to add or remove the layer from the map
+    const checkBox = document.getElementById(checkboxId);
+    checkBox.addEventListener('change', function () {
+        if (this.checked) {
+            map.addLayer(layer);
+        } else {
+            map.removeLayer(layer);
+        }
+    });
 }
