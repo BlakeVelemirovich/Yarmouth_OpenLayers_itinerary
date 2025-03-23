@@ -32,18 +32,31 @@ const darkLayer = new TileLayer({
         url: 'https://{a-c}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png'
     })
 });
+// Get selected radio button (this is a fix for refreshing the page and having the correct layer selected)
+const selectedBaseLayer = document.querySelector('input[name="basemap"]:checked');
 
-// Create the map instance with only the OSM layer by default
+// Default layer is the light mode OSM layer
+let initialLayer = osmLayer; 
+
+// Check whcih radio button is selected and set the initial layer to the correct layer
+if (selectedBaseLayer) {
+    if (selectedBaseLayer.id === 'sat') {
+        initialLayer = satLayer;
+    } else if (selectedBaseLayer.id === 'darkMode') {
+        initialLayer = darkLayer;
+    }
+}
+
+// Initialize the map with the correct layer
 const map = new Map({
     target: 'map',
-    layers: [
-      osmLayer
-    ],
+    layers: [initialLayer],
     view: new View({
         center: fromLonLat([-66.12959, 43.81600]),
         zoom: 13
     })
 });
+
 
 // Function to switch basemaps using event listeners waiting for a change in radio button
 // Works by just replacing the first layer in the map layers array with the map layer associated with the radio button clicked
@@ -193,7 +206,13 @@ map.on('pointermove', function (evt) {
     document.getElementById('coords').textContent = `${coord[0].toFixed(5)}, ${coord[1].toFixed(5)}`;
 });
 
-// Add each layer to the map so that it starts with them enabled.
-map.addLayer(pointsLayer);
-map.addLayer(trailLayer);
-map.addLayer(polygonLayer);
+// Add each layer to the map so that it starts with them enabled. Check first if the checkbox is checked, if it is, add the layer to the map.
+if (pointsCheckBox.checked) {
+    map.addLayer(pointsLayer);
+}
+if (trailCheckBox.checked) {
+    map.addLayer(trailLayer);
+}
+if (polygonCheckBox.checked) {
+    map.addLayer(polygonLayer);
+}
