@@ -57,7 +57,10 @@ const pointsLayer = new VectorLayer({
         image: new Circle({
             radius: 5,
             fill: new Fill({ color: 'red' }),
-            stroke: new Stroke({ color: 'black', width: 1 })
+            stroke: new Stroke({ 
+                color: 'black', 
+                width: 1 
+            }) 
         })
     })
 });
@@ -69,7 +72,10 @@ const trailLayer = new VectorLayer({
         format: new GeoJSON(),
     }),
     style: new Style({
-        stroke: new Stroke({ color: 'blue', width: 2 })
+        stroke: new Stroke({
+             color: 'blue',
+              width: 2 
+            })
     })
 });
 
@@ -80,7 +86,16 @@ const polygonLayer = new VectorLayer({
         format: new GeoJSON(),
     }),
     style: new Style({
-        stroke: new Stroke({ color: 'blue', width: 2 })
+        fill: new Fill({
+            color: 'rgba(0, 255, 255, 0.4)' 
+        }),
+        stroke: new Stroke({
+            color: '#0ff',
+            width: 3, 
+            lineDash: [5, 5], 
+            lineCap: 'round', 
+            lineJoin: 'round' 
+        })
     })
 });
 
@@ -92,7 +107,6 @@ pointsCheckBox.addEventListener('change', function () {
     } else {
         map.removeLayer(pointsLayer);
     }
-    console.log("beep boop")
 });
 
 // Trail check box
@@ -105,11 +119,23 @@ trailCheckBox.addEventListener('change', function () {
     }
 });
 
+// Polygon check box
+const polygonCheckBox = document.getElementById('polygonCheck');
+polygonCheckBox.addEventListener('change', function () {
+    if (this.checked) {
+        map.addLayer(polygonLayer);
+    } else {
+        map.removeLayer(polygonLayer);
+    }
+});
+
 // Show cursor coordinates
 map.on('pointermove', function (evt) {
     const coord = toLonLat(evt.coordinate);
     document.getElementById('coords').textContent = `${coord[0].toFixed(5)}, ${coord[1].toFixed(5)}`;
 });
 
+// Add each layer to the map so that it starts with them enabled.
 map.addLayer(pointsLayer);
 map.addLayer(trailLayer);
+map.addLayer(polygonLayer);

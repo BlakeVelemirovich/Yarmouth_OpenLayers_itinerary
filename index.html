@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yarmouth, NS - Interactive</title>
+    <title>Yarmouth Itinerary</title>
     <script src="https://cdn.jsdelivr.net/npm/ol@latest/dist/ol.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@latest/ol.css">
     <link rel="stylesheet" href="./style.css">
     <script type="module" src="main.js" defer></script>
 </head>
 <body>
-    <h1>Yarmouth, NS - Interactive Map</h1>
+    <h1>Yarmouth, NS Itinerary</h1>
     <img src="logo.png" alt="Logo" width="100">
     <div class="controls">
         <label><input type="radio" name="basemap" id="osm" checked> OSM Basemap</label>
@@ -18,6 +18,7 @@
         <br>
         <label><input type="checkbox" id="pointsCheck"> Show Points of Interest</label>
         <label><input type="checkbox" id="trailCheck"> Show Hiking Trails</label>
+        <label><input type="checkbox" id="polygonCheck">Show Polygons</label>
     </div>
     <div id="map"></div>
     <div class="coordinates">Cursor Position: <span id="coords">0, 0</span></div>
